@@ -17,6 +17,12 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
+    <!-- Карточка для мобильных превью (Android / iOS) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Лесной журнал • Новости и аналитика от Лесовик ПРО">
+    <meta name="twitter:description" content="Актуальные новости лесоустройства, изменения законов и правила отвода лесосек.">
+    <meta name="twitter:image" content="https://journal.lesovik-pro.ru/logo.jpeg">
+
     <!-- Глобальные скрипты РСЯ -->
     <script>window.yaContextCb = window.yaContextCb || []</script>
     <script src="https://yandex.ru/ads/system/context.js" async></script>
@@ -32,8 +38,6 @@
             --text-main: #2C3E50;
             --text-muted: #7F8C8D;
             --border-color: #E2E8F0;
-            --ad-bg: #FFF9E6;
-            --ad-border: #F39C12;
         }
 
         body {
@@ -151,13 +155,19 @@
             margin-top: auto;
         }
 
-        /* Стиль для рекламных блоков в ленте */
-        .ad-card {
+        /* Аккуратный фиксированный контейнер для РСЯ, исключающий «портянки» */
+        .ad-container-box {
+            width: 100%;
+            min-height: 90px;
+            max-height: 150px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 15px;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 10px;
         }
 
         aside {
@@ -243,9 +253,11 @@
                 <a href="https://lesovik-pro.ru/" class="promo-software-link">Открыть софт и калькуляторы</a>
             </div>
 
-            <!-- Рекламный блок РСЯ в сайдбаре -->
+            <!-- Аккуратный рекламный блок РСЯ в сайдбаре -->
             <div class="sidebar-widget">
-                <div id="yandex_rtb_R-A-19250236-4"></div>
+                <div class="ad-container-box">
+                    <div id="yandex_rtb_R-A-19250236-4"></div>
+                </div>
                 <script>
                     window.yaContextCb.push(() => {
                         Ya.Context.AdvManager.render({
@@ -269,7 +281,7 @@
     </footer>
 
     <script>
-        // Функция динамической генерации ленты с интеграцией блоков РСЯ через каждые 2 статьи
+        // Динамическая генерация ленты с аккуратными вставками РСЯ через каждые 2 статьи
         async function loadJournalFeed() {
             const feed = document.getElementById('journal-feed');
             try {
@@ -291,15 +303,14 @@
                             </a>
                         `;
 
-                        // Встраиваем рекламный блок РСЯ после каждой 2-й статьи
+                        // Аккуратная рекламная вставка после каждой 2-й статьи
                         if ((index + 1) % 2 === 0) {
                             const adBlockId = `yandex_rtb_feed_${index}`;
                             feed.innerHTML += `
-                                <div class="ad-card">
+                                <div class="ad-container-box">
                                     <div id="${adBlockId}"></div>
                                 </div>
                             `;
-                            // Рендерим блок рекламы через очередь Яндекс Контекста
                             window.yaContextCb.push(() => {
                                 Ya.Context.AdvManager.render({
                                     "blockId": "R-A-19250236-5",
@@ -317,7 +328,7 @@
             }
         }
 
-        // Запасной демонстрационный контент, если API временно недоступно
+        // Запасной демонстрационный контент
         function renderDemoFeed(container) {
             container.innerHTML = `
                 <div class="article-card">
@@ -329,7 +340,7 @@
                     </div>
                 </div>
 
-                <div class="ad-card">
+                <div class="ad-container-box">
                     <div id="yandex_rtb_demo_ad"></div>
                 </div>
 
