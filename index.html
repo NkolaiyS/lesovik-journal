@@ -2,26 +2,32 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лесной журнал • Новости, законы и аналитика от Лесовик ПРО</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Лесной журнал • Новости, лайфхаки природы и аналитика от Лесовик ПРО</title>
     
     <!-- Иконка сайта -->
     <link rel="icon" type="image/jpeg" href="logo.jpeg">
 
     <!-- Open Graph для мессенджеров -->
-    <meta property="og:title" content="Лесной журнал • Новости и аналитика от Лесовик ПРО">
-    <meta property="og:description" content="Актуальные новости лесоустройства, изменения законов и правила отвода лесосек.">
+    <meta property="og:title" content="Лесной журнал • Новости, лайфхаки природы и аналитика от Лесовик ПРО">
+    <meta property="og:description" content="Актуальные новости лесоустройства, законы, инструменты для личного пользования и лайфхаки природы.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://journal.lesovik-pro.ru/">
     <meta property="og:image" content="https://journal.lesovik-pro.ru/logo.jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
-    <!-- Карточка для мобильных превью (Android / iOS) -->
+    <!-- Карточка для мобильных превью -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Лесной журнал • Новости и аналитика от Лесовик ПРО">
-    <meta name="twitter:description" content="Актуальные новости лесоустройства, изменения законов и правила отвода лесосек.">
+    <meta name="twitter:title" content="Лесной журнал • Новости, лайфхаки природы и аналитика">
+    <meta name="twitter:description" content="Актуальные новости лесоустройства, законы и лайфхаки природы для любителей леса.">
     <meta name="twitter:image" content="https://journal.lesovik-pro.ru/logo.jpeg">
+
+    <!-- Инициализация темы до загрузки страницы -->
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
 
     <!-- Глобальные скрипты РСЯ -->
     <script>window.yaContextCb = window.yaContextCb || []</script>
@@ -31,143 +37,175 @@
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
         
         :root {
-            --primary-color: #2D5A27;
-            --secondary-color: #4A7C59;
-            --bg-color: #F4F6F4;
+            --bg-paper: #F9FBF9;
+            --text-graphite: #333333;
+            --forest-green: #2D5A27;
+            --forest-light: #8FBC8F;
+            --border-color: #E0E0E0;
             --card-bg: #FFFFFF;
-            --text-main: #2C3E50;
-            --text-muted: #7F8C8D;
-            --border-color: #E2E8F0;
+            --glass-bg: rgba(249, 251, 249, 0.88);
+            --footer-bg: #2C3531;
+            --nav-bg: rgba(249, 251, 249, 0.96);
         }
+
+        [data-theme="dark"] {
+            --bg-paper: #1A2421;
+            --text-graphite: #F9FBF9;
+            --forest-green: #8FBC8F;
+            --forest-light: #2D5A27;
+            --border-color: #3A4F46;
+            --card-bg: #22302B;
+            --glass-bg: rgba(26, 36, 33, 0.88);
+            --footer-bg: #111815;
+            --nav-bg: rgba(26, 36, 33, 0.96);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
+            background-color: var(--bg-paper);
+            color: var(--text-graphite);
             line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        header {
-            background: #FFFFFF;
+        /* ШАПКА */
+        .glass-header {
+            position: sticky; top: 0; z-index: 2000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 40px; background: var(--glass-bg);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
-            padding: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .header-logo { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--forest-green); }
+        .glass-header h1 { font-family: 'Merriweather', serif; color: var(--forest-green); margin: 0; font-size: 22px; }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
-        }
+        .header-right { display: flex; align-items: center; gap: 15px; }
 
-        .logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
+        .theme-toggle {
+            background: transparent; border: 1px solid var(--forest-green); color: var(--forest-green);
+            padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; height: 40px; text-transform: uppercase;
         }
-
-        .brand-title h1 {
-            color: var(--primary-color);
-            font-family: 'Merriweather', serif;
-            font-size: 22px;
-            margin: 0;
-        }
-
-        .brand-title p {
-            color: var(--text-muted);
-            font-size: 13px;
-            margin: 2px 0 0 0;
-        }
+        .theme-toggle:hover { background-color: var(--forest-green); color: var(--bg-paper); }
 
         .main-layout {
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 1fr 320px;
+            grid-template-columns: 1fr 340px;
             gap: 30px;
+            flex: 1;
+            width: 100%;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 950px) {
             .main-layout {
                 grid-template-columns: 1fr;
             }
+            .glass-header { padding: 12px 20px; }
         }
 
-        .feed-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        /* БЕНТО-СЕТКА В ШАХМАТНОМ ПОРЯДКЕ ДЛЯ ДЕСКТОПОВ */
+        .bento-feed-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
         }
 
         .article-card {
-            background: var(--card-bg);
+            background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 14px;
             padding: 24px;
             text-decoration: none;
             color: inherit;
             display: flex;
             flex-direction: column;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
         }
 
         .article-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-            border-color: var(--secondary-color);
+            transform: translateY(-4px);
+            border-color: var(--forest-green);
+            box-shadow: 0 10px 25px rgba(45,90,39,0.1);
+        }
+
+        /* Шахматный акцент: каждая первая карточка в паре шире или имеет особый стиль */
+        .article-card.featured-article {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(45, 90, 39, 0.05) 0%, transparent 100%), var(--card-bg);
+            border: 1.5px solid var(--forest-green);
+        }
+
+        @media (max-width: 950px) {
+            .bento-feed-grid { grid-template-columns: 1fr; }
+            .article-card.featured-article { grid-column: span 1; }
+        }
+
+        .article-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            background-color: var(--border-color);
+            margin-bottom: 16px;
         }
 
         .article-title {
             font-family: 'Merriweather', serif;
             font-size: 20px;
-            color: var(--primary-color);
+            color: var(--forest-green);
             margin: 0 0 10px 0;
             line-height: 1.4;
         }
 
         .article-snippet {
-            font-size: 15px;
-            color: #555;
-            margin: 0 0 15px 0;
+            font-size: 14.5px;
+            opacity: 0.85;
+            margin: 0 0 20px 0;
+            line-height: 1.6;
+            flex-grow: 1;
         }
 
         .article-meta {
-            font-size: 12px;
-            color: var(--text-muted);
+            font-size: 12.5px;
+            opacity: 0.7;
             display: flex;
             align-items: center;
             gap: 15px;
             margin-top: auto;
         }
 
-        /* Аккуратный фиксированный контейнер для РСЯ, исключающий «портянки» */
+        /* Увеличенная и аккуратная высота блоков РСЯ без «портянок» */
         .ad-container-box {
+            grid-column: span 2;
             width: 100%;
-            min-height: 90px;
-            max-height: 150px;
+            min-height: 140px;
+            max-height: 180px;
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border: 1px dashed var(--forest-green);
+            border-radius: 14px;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            padding: 10px;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+        @media (max-width: 950px) {
+            .ad-container-box { grid-column: span 1; }
         }
 
         aside {
@@ -179,83 +217,89 @@
         .sidebar-widget {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         .sidebar-widget h3 {
             font-size: 16px;
-            color: var(--primary-color);
+            font-family: 'Merriweather', serif;
+            color: var(--forest-green);
             margin-top: 0;
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .promo-software-link {
             display: block;
-            background: #EAF2EC;
-            border: 1px solid var(--secondary-color);
-            padding: 15px;
+            background: var(--bg-paper);
+            border: 1px solid var(--forest-green);
+            padding: 14px;
             border-radius: 8px;
             text-decoration: none;
-            color: var(--primary-color);
-            font-weight: 600;
+            color: var(--forest-green);
+            font-weight: 700;
             text-align: center;
-            transition: background 0.2s;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
         }
 
         .promo-software-link:hover {
-            background: #DCE8DF;
+            background: var(--forest-green);
+            color: var(--bg-paper);
         }
 
         footer {
-            background: #FFFFFF;
-            border-top: 1px solid var(--border-color);
-            margin-top: 50px;
-            padding: 30px 0;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 13px;
+            background-color: var(--footer-bg);
+            color: #E0E0E0;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+            font-size: 13.5px;
         }
-
-        footer a {
-            color: var(--primary-color);
-            text-decoration: none;
+        .footer-content {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px; margin-bottom: 30px;
         }
+        .footer-column h4 { font-family: 'Merriweather', serif; color: #fff; font-size: 15px; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+        .footer-column a { color: var(--forest-light); text-decoration: none; display: block; margin-bottom: 8px; }
+        .footer-column a:hover { color: #fff; text-decoration: underline; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); opacity: 0.6; font-size: 12px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-container">
-            <a href="https://journal.lesovik-pro.ru/" class="brand">
-                <img src="logo.jpeg" alt="Логотип" class="logo">
-                <div class="brand-title">
-                    <h1>Лесной журнал</h1>
-                    <p>Экспертная аналитика и новости лесной отрасли</p>
-                </div>
-            </a>
-            <a href="https://lesovik-pro.ru/" style="color: var(--primary-color); text-decoration: none; font-weight: 600; font-size: 14px;">Перейти к приборам →</a>
+    <header class="glass-header">
+        <a href="https://journal.lesovik-pro.ru/" class="logo-container">
+            <img src="logo.jpeg" alt="Лесовик" class="header-logo" onerror="this.style.display='none'">
+            <h1>Лесной журнал</h1>
+        </a>
+        <div class="header-right">
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">Тема</button>
         </div>
     </header>
 
     <div class="main-layout">
-        <!-- Основная новостная лента -->
-        <main class="feed-container" id="journal-feed">
-            <p style="color: var(--text-muted);">Загрузка публикаций...</p>
+        <!-- Основная новостная лента (Бенто-сетка) -->
+        <main class="bento-feed-grid" id="journal-feed">
+            <p style="color: var(--forest-green); grid-column: 1 / -1;">⏳ Загрузка публикаций и свежих материалов...</p>
         </main>
 
         <!-- Боковая колонка (Сайдбар) -->
         <aside>
             <div class="sidebar-widget">
                 <h3>Инструменты Лесовик ПРО</h3>
-                <p style="font-size: 13px; color: #555;">Профессиональные программы и калькуляторы для таксации и отвода делянок.</p>
-                <a href="https://lesovik-pro.ru/" class="promo-software-link">Открыть софт и калькуляторы</a>
+                <p style="font-size: 13.5px; opacity: 0.85; margin-bottom: 15px;">Профессиональные программы, буссоли и калькуляторы для таксации и отвода делянок.</p>
+                <a href="https://lesovik-pro.ru/" class="promo-software-link">Открыть софт и калькуляторы →</a>
             </div>
 
             <!-- Аккуратный рекламный блок РСЯ в сайдбаре -->
             <div class="sidebar-widget">
-                <div class="ad-container-box">
+                <div class="ad-container-box" style="min-height: 250px; max-height: none;">
                     <div id="yandex_rtb_R-A-19250236-4"></div>
                 </div>
                 <script>
@@ -271,17 +315,47 @@
             
             <div class="sidebar-widget">
                 <h3>О проекте</h3>
-                <p style="font-size: 13px; color: #555;">Издание освещает актуальные изменения нормативной базы, практику лесоустройства и современные технические средства для работы в лесу.</p>
+                <p style="font-size: 13.5px; opacity: 0.85;">Издание освещает актуальные изменения нормативной базы, практику лесоустройства, полезные инструменты для личного пользования, лайфхаки природы и современные технические средства для работы в тайге.</p>
             </div>
         </aside>
     </div>
 
     <footer>
-        <p>&copy; 2026 Лесовик ПРО. Все права защищены. <br><a href="https://lesovik-pro.ru/">Главный сайт проекта</a></p>
+        <div class="footer-content">
+            <div class="footer-column">
+                <div style="font-weight: 700; font-family: 'Merriweather', serif; font-size: 16px; margin-bottom: 8px; color: #fff;">Лесной журнал «Лесовик ПРО»</div>
+                <div style="opacity: 0.8; font-size: 13px;">Информационный портал для профессионалов лесной отрасли, любителей природы и туристов.</div>
+            </div>
+            <div class="footer-column">
+                <h4>Навигация</h4>
+                <a href="https://lesovik-pro.ru/">Главный сайт приборов</a>
+                <a href="https://journal.lesovik-pro.ru/">Лента новостей и статей</a>
+            </div>
+            <div class="footer-column">
+                <h4>Контакты</h4>
+                <a href="mailto:folgoal@gmail.com">✉️ folgoal@gmail.com</a>
+                <div style="font-size: 12px; margin-top: 10px; opacity: 0.6;">ИП Худяков Николай Сергеевич<br>Сыктывкар, Республика Коми</div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <script>document.write(new Date().getFullYear())</script> Лесовик ПРО. Все права защищены.
+        </div>
     </footer>
 
     <script>
-        // Динамическая генерация ленты с аккуратными вставками РСЯ через каждые 2 статьи
+        // Переключение тем
+        function toggleTheme() {
+            const body = document.documentElement;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Динамическая генерация бенто-ленты с картинками и рекламными вставками в шахматном порядке
         async function loadJournalFeed() {
             const feed = document.getElementById('journal-feed');
             try {
@@ -291,19 +365,27 @@
                 if (data.articles && data.articles.length > 0) {
                     feed.innerHTML = '';
                     data.articles.forEach((article, index) => {
+                        const imgUrl = article.cover_image_url && article.cover_image_url.trim() !== "" ? article.cover_image_url : 'https://placehold.co/600x400/2D5A27/FFF?text=Лесовик+ПРО';
+                        const textLength = article.content ? article.content.replace(/<[^>]+>/g, '').split(/\s+/).length : 0;
+                        const readTime = Math.max(1, Math.ceil(textLength / 150));
+                        
+                        // Каждая первая статья в паре получает класс featured-article для шахматного бенто-эффекта
+                        const isFeatured = (index % 3 === 0) ? 'featured-article' : '';
+
                         // Вывод карточки статьи
                         feed.innerHTML += `
-                            <a href="https://lesovik-pro.ru/?post=${article.slug || ''}" class="article-card" target="_blank">
+                            <a href="https://lesovik-pro.ru/?post=${article.slug || ''}" class="article-card ${isFeatured}" target="_blank">
+                                <img src="${imgUrl}" alt="Обложка" class="article-img">
                                 <h2 class="article-title">${article.title}</h2>
-                                <p class="article-snippet">${article.snippet || 'Читайте подробный разбор изменений в материалах нашего издания...'}</p>
+                                <p class="article-snippet">${article.snippet || 'Читайте подробный экспертный материал в нашем издании...'}</p>
                                 <div class="article-meta">
                                     <span>📅 ${article.published_at || 'Свежий выпуск'}</span>
-                                    <span>⏱️ Чтение: 3 мин</span>
+                                    <span>⏱️ Чтение: ~${readTime} мин</span>
                                 </div>
                             </a>
                         `;
 
-                        // Аккуратная рекламная вставка после каждой 2-й статьи
+                        // Встраиваем аккуратный рекламный блок РСЯ в сетку после каждой 2-й статьи
                         if ((index + 1) % 2 === 0) {
                             const adBlockId = `yandex_rtb_feed_${index}`;
                             feed.innerHTML += `
@@ -328,15 +410,16 @@
             }
         }
 
-        // Запасной демонстрационный контент
+        // Демо-контент на случай недоступности API
         function renderDemoFeed(container) {
             container.innerHTML = `
-                <div class="article-card">
+                <div class="article-card featured-article">
+                    <img src="https://placehold.co/600x400/2D5A27/FFF?text=Лесной+Закон" alt="Обложка" class="article-img">
                     <h2 class="article-title">Изменения в правилах отвода и таксации лесосек на 2026 год</h2>
                     <p class="article-snippet">Подробный обзор новых требований к оформлению документов, учету древесины и взаимодействию с контролирующими ведомствами.</p>
                     <div class="article-meta">
                         <span>📅 10 сентября 2026</span>
-                        <span>⏱️ Чтение: 4 мин</span>
+                        <span>⏱️ Чтение: ~4 мин</span>
                     </div>
                 </div>
 
@@ -345,11 +428,12 @@
                 </div>
 
                 <div class="article-card">
-                    <h2 class="article-title">Практические рекомендации по расчету материальной оценки лесосек</h2>
-                    <p class="article-snippet">Разбор частых ошибок при камеральной обработке материалов и подготовке отчетности по новым стандартам.</p>
+                    <img src="https://placehold.co/600x400/8FBC8F/FFF?text=Лайфхаки+Природы" alt="Обложка" class="article-img">
+                    <h2 class="article-title">Лайфхаки туризма и выживания: как ориентироваться в тайге без связи</h2>
+                    <p class="article-snippet">Практические советы для любителей природы и походов: проверка азимутов, чтение карты и автономные инструменты в смартфоне.</p>
                     <div class="article-meta">
                         <span>📅 08 сентября 2026</span>
-                        <span>⏱️ Чтение: 5 мин</span>
+                        <span>⏱️ Чтение: ~3 мин</span>
                     </div>
                 </div>
             `;
