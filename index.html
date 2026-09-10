@@ -4,21 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Лесной журнал • Новости и аналитика от Лесовик ПРО</title>
+    
+    <!-- Иконка сайта -->
+    <link rel="icon" type="image/jpeg" href="logo.jpeg">
+
+    <!-- Open Graph для мессенджеров (Telegram, VK, WhatsApp) -->
+    <meta property="og:title" content="Лесной журнал • Новости и аналитика от Лесовик ПРО">
+    <meta property="og:description" content="Актуальные новости лесоустройства, изменения законов и правила отвода лесосек.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://journal.lesovik-pro.ru/">
+    <meta property="og:image" content="https://journal.lesovik-pro.ru/logo.jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Карточка для мобильных превью (Android / iOS) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Лесной журнал • Новости и аналитика от Лесовик ПРО">
+    <meta name="twitter:description" content="Актуальные новости лесоустройства, изменения законов и правила отвода лесосек.">
+    <meta name="twitter:image" content="https://journal.lesovik-pro.ru/logo.jpeg">
+
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F9FBF9; color: #333; margin: 0; padding: 40px 20px; line-height: 1.6; }
-        .container { max-width: 800px; margin: 0 auto; background: #FFF; padding: 40px; border-radius: 12px; border: 1px solid #E0E0E0; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
-        h1 { color: #2D5A27; font-family: 'Merriweather', serif; margin-top: 0; }
-        .back-link { display: inline-block; margin-top: 20px; color: #2D5A27; text-decoration: none; font-weight: 700; }
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; background-color: #F9FBF9; color: #333; margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; background: #FFF; padding: 30px; border-radius: 12px; border: 1px solid #E0E0E0; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        
+        .header { display: flex; align-items: center; gap: 15px; border-bottom: 2px solid #2D5A27; padding-bottom: 20px; margin-bottom: 30px; }
+        .logo { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #2D5A27; }
+        h1 { color: #2D5A27; font-family: 'Merriweather', serif; margin: 0; font-size: 24px; }
+        
+        .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .article-card { border: 1px solid #E0E0E0; border-radius: 8px; padding: 15px; background: #FAFAFA; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform 0.2s, border-color 0.2s; }
+        .article-card:hover { transform: translateY(-3px); border-color: #2D5A27; }
+        .article-title { font-family: 'Merriweather', serif; font-size: 16px; color: #2D5A27; margin-bottom: 10px; }
+        .article-meta { font-size: 12px; color: #666; margin-top: auto; padding-top: 10px; }
+        
+        .back-link { display: inline-block; margin-top: 30px; color: #2D5A27; text-decoration: none; font-weight: 700; }
         .back-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📰 Лесной журнал «Лесовик ПРО»</h1>
-        <p>Здесь публикуются актуальные новости лесоустройства, изменения законов, правила отвода лесосек и аналитика для специалистов лесной отрасли.</p>
-        <p><b>Сайт находится в режиме настройки.</b> Скоро здесь появится лента автоматических новостей и экспертных материалов.</p>
-        <hr style="border: none; border-top: 1px solid #E0E0E0; margin: 30px 0;">
-        <a href="https://lesovik-pro.ru/" class="live-link">← Вернуться на главный сайт приборов «Лесовик ПРО»</a>
+        <div class="header">
+            <img src="logo.jpeg" alt="Логотип" class="logo">
+            <h1>Лесной журнал «Лесовик ПРО»</h1>
+        </div>
+        
+        <p>Актуальные новости лесоустройства, изменения законов, правила отвода лесосек и аналитика для специалистов лесной отрасли.</p>
+        
+        <div id="journal-feed" class="articles-grid">
+            <p style="color: #666;">⏳ Загрузка свежих материалов из базы...</p>
+        </div>
+
+        <hr style="border: none; border-top: 1px solid #E0E0E0; margin: 40px 0 20px 0;">
+        <a href="https://lesovik-pro.ru/" class="back-link">← Вернуться на главный сайт приборов «Лесовик ПРО»</a>
     </div>
+
+    <script>
+        // Подтягиваем статьи из вашего общего бэкенда на Яндекс.Функциях
+        async function loadJournalArticles() {
+            try {
+                const response = await fetch('https://functions.yandexcloud.net/d4ecn5ag33dcdd2deivd?action=list&limit=6');
+                const data = await response.json();
+                const feed = document.getElementById('journal-feed');
+                
+                if (data.articles && data.articles.length > 0) {
+                    feed.innerHTML = '';
+                    data.articles.forEach(article => {
+                        feed.innerHTML += `
+                            <a href="https://lesovik-pro.ru/?post=${article.slug || ''}" class="article-card" target="_blank">
+                                <div class="article-title">${article.title}</div>
+                                <div class="article-meta">📅 ${article.published_at || 'Свежее'}</div>
+                            </a>
+                        `;
+                    });
+                } else {
+                    feed.innerHTML = '<p>В журнале пока нет опубликованных записей.</p>';
+                }
+            } catch (err) {
+                document.getElementById('journal-feed').innerHTML = '<p style="color: #666;">Лента новостей в режиме настройки.</p>';
+            }
+        }
+        loadJournalArticles();
+    </script>
 </body>
 </html>
