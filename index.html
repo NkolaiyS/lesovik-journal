@@ -3,33 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Лесной журнал • Новости, лайфхаки природы и аналитика от Лесовик ПРО</title>
+    <title>Лесной журнал • Законы, лайфхаки природы и практика тайги от Лесовик ПРО</title>
     
     <!-- Иконка сайта -->
     <link rel="icon" type="image/jpeg" href="logo.jpeg">
 
     <!-- Open Graph для мессенджеров -->
-    <meta property="og:title" content="Лесной журнал • Новости, лайфхаки природы и аналитика от Лесовик ПРО">
-    <meta property="og:description" content="Актуальные новости лесоустройства, законы, инструменты для личного пользования и лайфхаки природы.">
+    <meta property="og:title" content="Лесной журнал • Законы, лайфхаки природы и практика тайги">
+    <meta property="og:description" content="Полезные материалы о лесе, законах, выживании и инструменты для работы в тайге без лишней воды.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://journal.lesovik-pro.ru/">
     <meta property="og:image" content="https://journal.lesovik-pro.ru/logo.jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
-    <!-- Карточка для мобильных превью -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Лесной журнал • Новости, лайфхаки природы и аналитика">
-    <meta name="twitter:description" content="Актуальные новости лесоустройства, законы и лайфхаки природы для любителей леса.">
-    <meta name="twitter:image" content="https://journal.lesovik-pro.ru/logo.jpeg">
-
-    <!-- Инициализация темы до загрузки страницы -->
+    <!-- Инициализация темы -->
     <script>
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
 
-    <!-- Глобальные скрипты РСЯ -->
+    <!-- РСЯ скрипт -->
     <script>window.yaContextCb = window.yaContextCb || []</script>
     <script src="https://yandex.ru/ads/system/context.js" async></script>
 
@@ -45,7 +39,6 @@
             --card-bg: #FFFFFF;
             --glass-bg: rgba(249, 251, 249, 0.88);
             --footer-bg: #2C3531;
-            --nav-bg: rgba(249, 251, 249, 0.96);
         }
 
         [data-theme="dark"] {
@@ -57,7 +50,6 @@
             --card-bg: #22302B;
             --glass-bg: rgba(26, 36, 33, 0.88);
             --footer-bg: #111815;
-            --nav-bg: rgba(26, 36, 33, 0.96);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
@@ -74,26 +66,21 @@
             min-height: 100vh;
         }
 
-        /* ШАПКА */
+        /* Шапка */
         .glass-header {
             position: sticky; top: 0; z-index: 2000;
             display: flex; justify-content: space-between; align-items: center;
             padding: 14px 40px; background: var(--glass-bg);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color);
         }
-
         .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .header-logo { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--forest-green); }
         .glass-header h1 { font-family: 'Merriweather', serif; color: var(--forest-green); margin: 0; font-size: 22px; }
 
-        .header-right { display: flex; align-items: center; gap: 15px; }
-
         .theme-toggle {
             background: transparent; border: 1px solid var(--forest-green); color: var(--forest-green);
             padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s; height: 40px; text-transform: uppercase;
+            text-transform: uppercase; transition: all 0.2s; height: 40px;
         }
         .theme-toggle:hover { background-color: var(--forest-green); color: var(--bg-paper); }
 
@@ -109,117 +96,95 @@
         }
 
         @media (max-width: 950px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
+            .main-layout { grid-template-columns: 1fr; }
             .glass-header { padding: 12px 20px; }
         }
 
-        /* БЕНТО-СЕТКА В ШАХМАТНОМ ПОРЯДКЕ ДЛЯ ДЕСКТОПОВ */
-        .bento-feed-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
+        /* КИРПИЧНАЯ СЕТКА (МАСОНРИ / ПЛОТНАЯ ПЛИТКА) */
+        .brick-feed-grid {
+            column-count: 2;
+            column-gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .brick-feed-grid { column-count: 1; }
         }
 
         .article-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            padding: 24px;
+            padding: 22px;
             text-decoration: none;
             color: inherit;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            position: relative;
+            display: inline-block; /* важно для колонночной кирпичной верстки */
+            width: 100%;
+            margin-bottom: 20px;
+            break-inside: avoid; /* предотвращает разрыв карточки пополам между колонками */
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         }
-
         .article-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             border-color: var(--forest-green);
-            box-shadow: 0 10px 25px rgba(45,90,39,0.1);
-        }
-
-        /* Шахматный акцент: каждая первая карточка в паре шире или имеет особый стиль */
-        .article-card.featured-article {
-            grid-column: span 2;
-            background: linear-gradient(135deg, rgba(45, 90, 39, 0.05) 0%, transparent 100%), var(--card-bg);
-            border: 1.5px solid var(--forest-green);
-        }
-
-        @media (max-width: 950px) {
-            .bento-feed-grid { grid-template-columns: 1fr; }
-            .article-card.featured-article { grid-column: span 1; }
+            box-shadow: 0 8px 22px rgba(45,90,39,0.08);
         }
 
         .article-img {
             width: 100%;
-            height: 220px;
+            height: 180px;
             object-fit: cover;
             border-radius: 10px;
             background-color: var(--border-color);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .article-title {
             font-family: 'Merriweather', serif;
-            font-size: 20px;
+            font-size: 18px;
             color: var(--forest-green);
-            margin: 0 0 10px 0;
-            line-height: 1.4;
+            margin: 0 0 8px 0;
+            line-height: 1.35;
         }
 
         .article-snippet {
-            font-size: 14.5px;
+            font-size: 14px;
             opacity: 0.85;
-            margin: 0 0 20px 0;
-            line-height: 1.6;
-            flex-grow: 1;
+            margin: 0 0 15px 0;
+            line-height: 1.5;
         }
 
         .article-meta {
-            font-size: 12.5px;
-            opacity: 0.7;
+            font-size: 12px;
+            opacity: 0.65;
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-top: auto;
+            gap: 12px;
         }
 
-        /* Увеличенная и аккуратная высота блоков РСЯ без «портянок» */
-        .ad-container-box {
-            grid-column: span 2;
-            width: 100%;
-            min-height: 140px;
-            max-height: 180px;
+        /* Аккуратный блок РСЯ (ваш блок R-A-19250236-6) */
+        .ad-brick-box {
+            break-inside: avoid;
             background: var(--card-bg);
-            border: 1px dashed var(--forest-green);
+            border: 1px solid var(--border-color);
             border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            overflow: hidden;
+            min-height: 120px;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            padding: 12px;
-            box-sizing: border-box;
-        }
-        @media (max-width: 950px) {
-            .ad-container-box { grid-column: span 1; }
         }
 
-        aside {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        aside { display: flex; flex-direction: column; gap: 20px; }
 
         .sidebar-widget {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 24px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         }
 
         .sidebar-widget h3 {
@@ -247,7 +212,6 @@
             letter-spacing: 0.5px;
             transition: all 0.2s;
         }
-
         .promo-software-link:hover {
             background: var(--forest-green);
             color: var(--bg-paper);
@@ -279,43 +243,42 @@
             <h1>Лесной журнал</h1>
         </a>
         <div class="header-right">
-            <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">Тема</button>
+            <button class="theme-toggle" onclick="toggleTheme()">Тема</button>
         </div>
     </header>
 
     <div class="main-layout">
-        <!-- Основная новостная лента (Бенто-сетка) -->
-        <main class="bento-feed-grid" id="journal-feed">
-            <p style="color: var(--forest-green); grid-column: 1 / -1;">⏳ Загрузка публикаций и свежих материалов...</p>
+        <!-- Кирпичная лента статей -->
+        <main class="brick-feed-grid" id="journal-feed">
+            <p style="color: var(--forest-green);">⏳ Загрузка материалов...</p>
         </main>
 
-        <!-- Боковая колонка (Сайдбар) -->
+        <!-- Сайдбар -->
         <aside>
             <div class="sidebar-widget">
                 <h3>Инструменты Лесовик ПРО</h3>
-                <p style="font-size: 13.5px; opacity: 0.85; margin-bottom: 15px;">Профессиональные программы, буссоли и калькуляторы для таксации и отвода делянок.</p>
-                <a href="https://lesovik-pro.ru/" class="promo-software-link">Открыть софт и калькуляторы →</a>
+                <p style="font-size: 13.5px; opacity: 0.85; margin-bottom: 15px;">Профессиональные программы, буссоль и калькуляторы для работы в лесу без интернета.</p>
+                <a href="https://lesovik-pro.ru/" class="promo-software-link">Открыть софт и приборы →</a>
             </div>
 
-            <!-- Аккуратный рекламный блок РСЯ в сайдбаре -->
+            <!-- Рекламный блок РСЯ в сайдбаре (блок 6) -->
             <div class="sidebar-widget">
-                <div class="ad-container-box" style="min-height: 250px; max-height: none;">
-                    <div id="yandex_rtb_R-A-19250236-4"></div>
+                <div class="ad-brick-box" style="min-height: 240px;">
+                    <div id="yandex_rtb_R-A-19250236-6"></div>
                 </div>
                 <script>
                     window.yaContextCb.push(() => {
                         Ya.Context.AdvManager.render({
-                            "blockId": "R-A-19250236-4",
-                            "renderTo": "yandex_rtb_R-A-19250236-4",
-                            "platform": "desktop"
+                            "blockId": "R-A-19250236-6",
+                            "renderTo": "yandex_rtb_R-A-19250236-6"
                         })
                     });
                 </script>
             </div>
             
             <div class="sidebar-widget">
-                <h3>О проекте</h3>
-                <p style="font-size: 13.5px; opacity: 0.85;">Издание освещает актуальные изменения нормативной базы, практику лесоустройства, полезные инструменты для личного пользования, лайфхаки природы и современные технические средства для работы в тайге.</p>
+                <h3>О журнале</h3>
+                <p style="font-size: 13.5px; opacity: 0.85;">Актуальные изменения законов, практика лесоустройства, полезные советы для личного пользования, лайфхаки природы и секреты безопасности в тайге для каждого.</p>
             </div>
         </aside>
     </div>
@@ -324,12 +287,12 @@
         <div class="footer-content">
             <div class="footer-column">
                 <div style="font-weight: 700; font-family: 'Merriweather', serif; font-size: 16px; margin-bottom: 8px; color: #fff;">Лесной журнал «Лесовик ПРО»</div>
-                <div style="opacity: 0.8; font-size: 13px;">Информационный портал для профессионалов лесной отрасли, любителей природы и туристов.</div>
+                <div style="opacity: 0.8; font-size: 13px;">Информационное издание о лесе, законах и природе.</div>
             </div>
             <div class="footer-column">
                 <h4>Навигация</h4>
                 <a href="https://lesovik-pro.ru/">Главный сайт приборов</a>
-                <a href="https://journal.lesovik-pro.ru/">Лента новостей и статей</a>
+                <a href="https://journal.lesovik-pro.ru/">Лента статей</a>
             </div>
             <div class="footer-column">
                 <h4>Контакты</h4>
@@ -343,7 +306,6 @@
     </footer>
 
     <script>
-        // Переключение тем
         function toggleTheme() {
             const body = document.documentElement;
             if (body.getAttribute('data-theme') === 'dark') {
@@ -355,7 +317,7 @@
             }
         }
 
-        // Динамическая генерация бенто-ленты с картинками и рекламными вставками в шахматном порядке
+        // Загрузка ленты в кирпичном стиле с картинками и редкой аккуратной рекламой
         async function loadJournalFeed() {
             const feed = document.getElementById('journal-feed');
             try {
@@ -368,36 +330,32 @@
                         const imgUrl = article.cover_image_url && article.cover_image_url.trim() !== "" ? article.cover_image_url : 'https://placehold.co/600x400/2D5A27/FFF?text=Лесовик+ПРО';
                         const textLength = article.content ? article.content.replace(/<[^>]+>/g, '').split(/\s+/).length : 0;
                         const readTime = Math.max(1, Math.ceil(textLength / 150));
-                        
-                        // Каждая первая статья в паре получает класс featured-article для шахматного бенто-эффекта
-                        const isFeatured = (index % 3 === 0) ? 'featured-article' : '';
 
-                        // Вывод карточки статьи
+                        // Карточка статьи
                         feed.innerHTML += `
-                            <a href="https://lesovik-pro.ru/?post=${article.slug || ''}" class="article-card ${isFeatured}" target="_blank">
+                            <a href="https://lesovik-pro.ru/?post=${article.slug || ''}" class="article-card" target="_blank">
                                 <img src="${imgUrl}" alt="Обложка" class="article-img">
                                 <h2 class="article-title">${article.title}</h2>
-                                <p class="article-snippet">${article.snippet || 'Читайте подробный экспертный материал в нашем издании...'}</p>
+                                <p class="article-snippet">${article.snippet || 'Читайте полезный разбор темы в нашем издании...'}</p>
                                 <div class="article-meta">
-                                    <span>📅 ${article.published_at || 'Свежий выпуск'}</span>
-                                    <span>⏱️ Чтение: ~${readTime} мин</span>
+                                    <span>📅 ${article.published_at || 'Свежее'}</span>
+                                    <span>⏱️ ~${readTime} мин</span>
                                 </div>
                             </a>
                         `;
 
-                        // Встраиваем аккуратный рекламный блок РСЯ в сетку после каждой 2-й статьи
-                        if ((index + 1) % 2 === 0) {
-                            const adBlockId = `yandex_rtb_feed_${index}`;
+                        // Вставляем рекламный блок редко (после каждых 4 статей, используя ваш блок 6), чтобы не перегружать страницу
+                        if ((index + 1) % 4 === 0) {
+                            const adId = `feed_ad_${index}`;
                             feed.innerHTML += `
-                                <div class="ad-container-box">
-                                    <div id="${adBlockId}"></div>
+                                <div class="ad-brick-box">
+                                    <div id="${adId}"></div>
                                 </div>
                             `;
                             window.yaContextCb.push(() => {
                                 Ya.Context.AdvManager.render({
-                                    "blockId": "R-A-19250236-5",
-                                    "renderTo": adBlockId,
-                                    "type": "feed"
+                                    "blockId": "R-A-19250236-6",
+                                    "renderTo": adId
                                 });
                             });
                         }
@@ -410,38 +368,46 @@
             }
         }
 
-        // Демо-контент на случай недоступности API
         function renderDemoFeed(container) {
             container.innerHTML = `
-                <div class="article-card featured-article">
-                    <img src="https://placehold.co/600x400/2D5A27/FFF?text=Лесной+Закон" alt="Обложка" class="article-img">
-                    <h2 class="article-title">Изменения в правилах отвода и таксации лесосек на 2026 год</h2>
-                    <p class="article-snippet">Подробный обзор новых требований к оформлению документов, учету древесины и взаимодействию с контролирующими ведомствами.</p>
+                <div class="article-card">
+                    <img src="https://placehold.co/600x400/2D5A27/FFF?text=Законы+Леса" alt="Обложка" class="article-img">
+                    <h2 class="article-title">Новые правила отвода и таксации лесосек: что важно знать</h2>
+                    <p class="article-snippet">Разбор актуальных требований законодательства, изменений в отчетности и правил работы для специалистов.</p>
                     <div class="article-meta">
                         <span>📅 10 сентября 2026</span>
-                        <span>⏱️ Чтение: ~4 мин</span>
+                        <span>⏱️ ~4 мин</span>
                     </div>
-                </div>
-
-                <div class="ad-container-box">
-                    <div id="yandex_rtb_demo_ad"></div>
                 </div>
 
                 <div class="article-card">
                     <img src="https://placehold.co/600x400/8FBC8F/FFF?text=Лайфхаки+Природы" alt="Обложка" class="article-img">
-                    <h2 class="article-title">Лайфхаки туризма и выживания: как ориентироваться в тайге без связи</h2>
-                    <p class="article-snippet">Практические советы для любителей природы и походов: проверка азимутов, чтение карты и автономные инструменты в смартфоне.</p>
+                    <h2 class="article-title">Лайфхаки туризма: как не потеряться в тайге и что взять с собой</h2>
+                    <p class="article-snippet">Полезные советы для любителей природы, охотников и грибников по автономной навигации и безопасности.</p>
                     <div class="article-meta">
                         <span>📅 08 сентября 2026</span>
-                        <span>⏱️ Чтение: ~3 мин</span>
+                        <span>⏱️ ~3 мин</span>
+                    </div>
+                </div>
+
+                <div class="ad-brick-box">
+                    <div id="demo_ad_brick"></div>
+                </div>
+
+                <div class="article-card">
+                    <img src="https://placehold.co/600x400/3A4F46/FFF?text=Практика" alt="Обложка" class="article-img">
+                    <h2 class="article-title">Как правильно проводить камеральную обработку материалов</h2>
+                    <p class="article-snippet">Практические рекомендации по расчету запасов древесины и оформлению документов без ошибок.</p>
+                    <div class="article-meta">
+                        <span>📅 05 сентября 2026</span>
+                        <span>⏱️ ~5 мин</span>
                     </div>
                 </div>
             `;
             window.yaContextCb.push(() => {
                 Ya.Context.AdvManager.render({
-                    "blockId": "R-A-19250236-5",
-                    "renderTo": "yandex_rtb_demo_ad",
-                    "type": "feed"
+                    "blockId": "R-A-19250236-6",
+                    "renderTo": "demo_ad_brick"
                 });
             });
         }
