@@ -17,6 +17,10 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
+    <!-- Глобальные скрипты РСЯ -->
+    <script>window.yaContextCb = window.yaContextCb || []</script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
         
@@ -149,54 +153,11 @@
 
         /* Стиль для рекламных блоков в ленте */
         .ad-card {
-            background: var(--ad-bg);
-            border: 1px dashed var(--ad-border);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 20px 24px;
-            position: relative;
-        }
-
-        .ad-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--ad-border);
-            color: #fff;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .ad-title {
-            font-family: 'Merriweather', serif;
-            font-size: 18px;
-            color: #D35400;
-            margin: 0 0 8px 0;
-        }
-
-        .ad-text {
-            font-size: 14px;
-            color: #444;
-            margin: 0 0 15px 0;
-        }
-
-        .ad-button {
-            display: inline-block;
-            background: #D35400;
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        .ad-button:hover {
-            background: #BA4A00;
+            padding: 15px;
+            text-align: center;
         }
 
         aside {
@@ -281,6 +242,20 @@
                 <p style="font-size: 13px; color: #555;">Профессиональные программы и калькуляторы для таксации и отвода делянок.</p>
                 <a href="https://lesovik-pro.ru/" class="promo-software-link">Открыть софт и калькуляторы</a>
             </div>
+
+            <!-- Рекламный блок РСЯ в сайдбаре -->
+            <div class="sidebar-widget">
+                <div id="yandex_rtb_R-A-19250236-4"></div>
+                <script>
+                    window.yaContextCb.push(() => {
+                        Ya.Context.AdvManager.render({
+                            "blockId": "R-A-19250236-4",
+                            "renderTo": "yandex_rtb_R-A-19250236-4",
+                            "platform": "desktop"
+                        })
+                    });
+                </script>
+            </div>
             
             <div class="sidebar-widget">
                 <h3>О проекте</h3>
@@ -294,7 +269,7 @@
     </footer>
 
     <script>
-        // Функция динамической генерации ленты с интеграцией нативных рекламных блоков через каждые 2 статьи
+        // Функция динамической генерации ленты с интеграцией блоков РСЯ через каждые 2 статьи
         async function loadJournalFeed() {
             const feed = document.getElementById('journal-feed');
             try {
@@ -316,16 +291,22 @@
                             </a>
                         `;
 
-                        // Встраиваем рекламный блок после каждой 2-й статьи
+                        // Встраиваем рекламный блок РСЯ после каждой 2-й статьи
                         if ((index + 1) % 2 === 0) {
+                            const adBlockId = `yandex_rtb_feed_${index}`;
                             feed.innerHTML += `
                                 <div class="ad-card">
-                                    <span class="ad-badge">Партнерский материал</span>
-                                    <h3 class="ad-title">Автоматизация отвода лесосек</h3>
-                                    <p class="ad-text">Используйте сертифицированные инструменты и программные комплексы «Лесовик ПРО» для полевых и камеральных работ.</p>
-                                    <a href="https://lesovik-pro.ru/" class="ad-button" target="_blank">Узнать подробнее</a>
+                                    <div id="${adBlockId}"></div>
                                 </div>
                             `;
+                            // Рендерим блок рекламы через очередь Яндекс Контекста
+                            window.yaContextCb.push(() => {
+                                Ya.Context.AdvManager.render({
+                                    "blockId": "R-A-19250236-5",
+                                    "renderTo": adBlockId,
+                                    "type": "feed"
+                                });
+                            });
                         }
                     });
                 } else {
@@ -349,10 +330,7 @@
                 </div>
 
                 <div class="ad-card">
-                    <span class="ad-badge">Рекомендуем</span>
-                    <h3 class="ad-title">Электронная буссоль для лесоустройства</h3>
-                    <p class="ad-text">Точное определение азимутов и привязка точек на местности без лишнего оборудования. Работайте в офлайн-режиме.</p>
-                    <a href="https://lesovik-pro.ru/" class="ad-button" target="_blank">Перейти к приборам</a>
+                    <div id="yandex_rtb_demo_ad"></div>
                 </div>
 
                 <div class="article-card">
@@ -364,6 +342,13 @@
                     </div>
                 </div>
             `;
+            window.yaContextCb.push(() => {
+                Ya.Context.AdvManager.render({
+                    "blockId": "R-A-19250236-5",
+                    "renderTo": "yandex_rtb_demo_ad",
+                    "type": "feed"
+                });
+            });
         }
 
         loadJournalFeed();
